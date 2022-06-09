@@ -4,7 +4,12 @@ using System.Text;
 
 namespace Capstone.Classes
 {
-    class Beverages
+    public class Beverages : CateringItem
     {
+        public Beverages(string name, double price, string id, int quantity) : base(name, price, id, quantity)
+        {
+
+        }
+
     }
 }

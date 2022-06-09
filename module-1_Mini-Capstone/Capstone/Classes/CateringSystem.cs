@@ -19,8 +19,8 @@ namespace Capstone.Classes
         public void AddMoney(int deposit)
         {
             
-            if ((Balance+deposit) <= 1000)
-            {
+            if ((Balance+deposit) <= 1000 && Balance+deposit >= 0)
+            { // Merritt said I could break this
                 Balance += deposit;
             }
             

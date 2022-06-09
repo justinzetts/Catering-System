@@ -9,6 +9,38 @@ namespace CapstoneTests
     [TestClass]
     public class CateringSystemTests
     {
+<<<<<<< HEAD
+=======
+        [DataTestMethod]
+        [DataRow(10)]
+        [DataRow(1000)]
+        [DataRow(0)]
+        public void AddMoneyShouldWork(int a)
+        {
+            // Arrange
+            CateringSystem sut = new CateringSystem();
+
+            // Act
+            sut.AddMoney(a);
+
+            // Assert
+            Assert.AreEqual(a, sut.Balance);
+        }
+
+        [TestMethod]
+        public void AddMoneyShouldNotChangeBalance()
+        {
+            // Arrange
+            CateringSystem sut = new CateringSystem();
+            int deposit = -5;
+
+            // Act
+            sut.AddMoney(deposit);
+
+            // Assert
+            Assert.AreEqual(0, sut.Balance);
+        }
+>>>>>>> 2f27761e9782ab5601166bb38259ed27efc2ef2c
 
 
     }
