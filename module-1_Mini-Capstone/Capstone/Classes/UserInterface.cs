@@ -84,6 +84,13 @@ namespace Capstone.Classes
 
                 if (orderMenuChoice == "(2)" || orderMenuChoice == "2" || orderMenuChoice == "two" || orderMenuChoice == "Two")
                 {
+                    Console.WriteLine("Please enter the product ID of the item you'd like to purchase");
+                    string selectProductChoice = Console.ReadLine();
+
+                    Console.WriteLine("Please enter the quantity you would like to purchase.");
+                    int productAmount = int.Parse(Console.ReadLine());
+                    catering.SelectProduct(selectProductChoice, productAmount);
+                    
                     // do SelectProducts() method, bro
                 }
 

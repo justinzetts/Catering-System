@@ -31,25 +31,25 @@ namespace Capstone.Classes
                     if (CateringItemArray[0] == "B")
                     {
                         Beverages bev = new Beverages(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        system.AddCateringItem(bev);
+                        system.AddCateringItem(CateringItemArray[2], bev);
                     }
 
                     else if (CateringItemArray[0] == "A")
                     {
                         Appetizers app = new Appetizers(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        system.AddCateringItem(app);
+                        system.AddCateringItem(CateringItemArray[2], app);
                     }
 
                     else if (CateringItemArray[0] == "E")
                     {
                         Entrees ent = new Entrees(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        system.AddCateringItem(ent);
+                        system.AddCateringItem(CateringItemArray[2], ent);
                     }
 
                     else if (CateringItemArray[0] == "D")
                     {
                         Dessert des = new Dessert(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        system.AddCateringItem(des);
+                        system.AddCateringItem(CateringItemArray[2], des);
                     }
                 }
 
