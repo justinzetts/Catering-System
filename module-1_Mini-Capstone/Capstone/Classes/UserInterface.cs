@@ -32,52 +32,65 @@ namespace Capstone.Classes
                 }
                     // do DisplayCateringItems() method, bro
 
-                if(mainMenuChoice == "(2)" || mainMenuChoice == "2" || mainMenuChoice == "two" || mainMenuChoice == "Two")
+                else if(mainMenuChoice == "(2)" || mainMenuChoice == "2" || mainMenuChoice == "two" || mainMenuChoice == "Two")
                 {
-                    public void RunOrderMenu()
-                    {
-
-                        bool quitOrderMenu = false;
-
-                        while (!quitOrderMenu)
-                        {
-                            Console.WriteLine("(1) Add Money");
-
-                            Console.WriteLine("(2) Select Products");
-
-                            Console.WriteLine("(3) Complete Transaction");
-
-                            string orderMenuChoice = Console.ReadLine();
-
-                            if (orderMenuChoice == "(1)" || orderMenuChoice == "1" || orderMenuChoice == "one" || orderMenuChoice == "One")
-                            {
-                                
-
-                                // do AddMoney() method, bro
-
-
-                            }
-
-                            if (orderMenuChoice == "(2)" || orderMenuChoice == "2" || orderMenuChoice == "two" || orderMenuChoice == "Two")
-                            {
-                                // do SelectProducts() method, bro
-                            }
-
-                            if (orderMenuChoice == "(3)" || orderMenuChoice == "3" || orderMenuChoice == "three" || orderMenuChoice == "Three")
-                            {
-                                quitOrderMenu = true;
-                            }
-                        }
-
-
-                    }
+                    RunOrderMenu();
                 }
 
-                if (mainMenuChoice == "(3)" || mainMenuChoice == "3" || mainMenuChoice == "three" || mainMenuChoice == "Three")
+                else if (mainMenuChoice == "(3)" || mainMenuChoice == "3" || mainMenuChoice == "three" || mainMenuChoice == "Three")
                 {
                     quitMainMenu = true;
                 }
+                else
+                {
+                    Console.WriteLine("Please select an actual option, idiot.");
+                }
             }
+        }
+        public void RunOrderMenu()
+        {
+
+            bool quitOrderMenu = false;
+
+            while (!quitOrderMenu)
+            {
+                Console.WriteLine("(1) Add Money");
+
+                Console.WriteLine("(2) Select Products");
+
+                Console.WriteLine("(3) Complete Transaction");
+
+                Console.WriteLine($"Your Current Account Balance is: {catering.Balance}");
+
+                string orderMenuChoice = Console.ReadLine();
+
+                if (orderMenuChoice == "(1)" || orderMenuChoice == "1" || orderMenuChoice == "one" || orderMenuChoice == "One")
+                {
+
+
+                    Console.WriteLine("How much money would you like to add? ");
+                    Console.WriteLine("Deposit amount must be in whole dollars (1/5/25/50?)");
+                    int deposit = int.Parse(Console.ReadLine());
+                    // do AddMoney() method, bro
+                    catering.AddMoney(deposit);
+
+
+                }
+
+                if (orderMenuChoice == "(2)" || orderMenuChoice == "2" || orderMenuChoice == "two" || orderMenuChoice == "Two")
+                {
+                    // do SelectProducts() method, bro
+                }
+
+                if (orderMenuChoice == "(3)" || orderMenuChoice == "3" || orderMenuChoice == "three" || orderMenuChoice == "Three")
+                {
+                    quitOrderMenu = true;
+                    
+                }
+            }
+            return;
+
+
         }
     }
 }

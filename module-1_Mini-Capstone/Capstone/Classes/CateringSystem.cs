@@ -9,21 +9,23 @@ namespace Capstone.Classes
     /// </summary>
     public class CateringSystem
     {
-        private readonly List<CateringItem> items = new List<CateringItem>();
-        
-        public string DisplayCateringItems()
+        public CateringSystem()
         {
+
+        }
+        private readonly List<CateringItem> items = new List<CateringItem>();
+
+        public double Balance { get; set; } = 0;
+        public void AddMoney(int deposit)
+        {
+            
+            if ((Balance+deposit) <= 1000)
+            {
+                Balance += deposit;
+            }
+            
 
         }
    
-
-        public void AddMoney()
-        {
-            double accountBalance = 0;
-
-            string addAmount = string OrderMenuChoiceAdd;
-
-
-        }
     }
 }
