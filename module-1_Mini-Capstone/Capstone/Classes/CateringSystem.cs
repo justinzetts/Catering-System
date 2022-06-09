@@ -13,38 +13,44 @@ namespace Capstone.Classes
         {
 
         }
-        private readonly List<CateringItem> items = new List<CateringItem>();
+        private Dictionary<string, CateringItem> items = new Dictionary<string, CateringItem>();
 
         public double Balance { get; set; } = 0;
         public void AddMoney(int deposit)
         {
-            
-            if ((Balance+deposit) <= 1000 && Balance+deposit >= 0)
+
+            if ((Balance + deposit) <= 1000 && Balance + deposit >= 0)
             { // Merritt said I could break this
                 Balance += deposit;
             }
-            
+
         }
-        public void AddCateringItem(CateringItem item)
+        public void AddCateringItem(string id, CateringItem item)
         {
-            items.Add(item);
+            items.Add(item.ID, item);
         }
-        
+
         public void DisplayCateringItems()
         {
-            foreach(CateringItem item in items)
+            foreach (KeyValuePair<string, CateringItem> kvp in items)
             {
-                if (item.Quantity == 0)
+                if (kvp.Value.Quantity == 0)
                 {
-                    Console.WriteLine($"{item.Name} ~~ {item.ID} ~~ ${item.Price} ~~ SOLD OUT ");
+                    Console.WriteLine($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ SOLD OUT ");
                 }
-                Console.WriteLine($"{item.Name} ~~ {item.ID} ~~ ${item.Price} ~~ {item.Quantity} ");
+                Console.WriteLine($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
                 // name, id, price, quantity
             }
-           
         }
 
-        
+        public void SelectProduct(string choice, int amount)
+        {
+            if (items.ContainsKey(choice) && items[choice].Quantity - amount >= 0 && (Balance >= ((items[choice].Price * amount))))
+            {
+                items[choice].Quantity -= amount;
+                Balance -= (items[choice].Price * amount);
+            }
 
-    }
+        }
+    }  
 }
