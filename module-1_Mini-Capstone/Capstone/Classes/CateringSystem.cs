@@ -11,7 +11,19 @@ namespace Capstone.Classes
     {
         private readonly List<CateringItem> items = new List<CateringItem>();
         
+        public string DisplayCateringItems()
+        {
 
+        }
    
+
+        public void AddMoney()
+        {
+            double accountBalance = 0;
+
+            string addAmount = string OrderMenuChoiceAdd;
+
+
+        }
     }
 }
