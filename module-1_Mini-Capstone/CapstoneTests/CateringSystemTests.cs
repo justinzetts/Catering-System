@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Capstone.Classes;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CapstoneTests
 {
-    class CateringSystemTests
+    [TestClass]
+    public class CateringSystemTests
     {
+
+
     }
+
 }
