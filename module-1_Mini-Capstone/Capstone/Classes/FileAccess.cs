@@ -15,9 +15,9 @@ namespace Capstone.Classes
         // You will likely need to create this directory and copy / paste any needed files.
         private const string sourceFile = @"C:\Catering\cateringsystem.csv";
 
-        public void ReadFiles()
+        public void ReadFiles(CateringSystem system)
         {
-            CateringSystem newItem = new CateringSystem();
+            
 
             using (StreamReader fileInput = new StreamReader(sourceFile))
 
@@ -31,25 +31,25 @@ namespace Capstone.Classes
                     if (CateringItemArray[0] == "B")
                     {
                         Beverages bev = new Beverages(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        newItem.AddCateringItem(bev);
+                        system.AddCateringItem(bev);
                     }
 
                     else if (CateringItemArray[0] == "A")
                     {
                         Appetizers app = new Appetizers(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        newItem.AddCateringItem(app);
+                        system.AddCateringItem(app);
                     }
 
                     else if (CateringItemArray[0] == "E")
                     {
                         Entrees ent = new Entrees(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        newItem.AddCateringItem(ent);
+                        system.AddCateringItem(ent);
                     }
 
                     else if (CateringItemArray[0] == "D")
                     {
                         Dessert des = new Dessert(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-                        newItem.AddCateringItem(des);
+                        system.AddCateringItem(des);
                     }
                 }
 

@@ -18,7 +18,7 @@ namespace Capstone.Classes
         
         public void RunMainMenu()
         {
-            file.ReadFiles();
+            file.ReadFiles(catering);
             bool quitMainMenu = false;
 
             while (!quitMainMenu)
