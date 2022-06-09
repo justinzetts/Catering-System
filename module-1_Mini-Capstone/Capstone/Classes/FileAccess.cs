@@ -17,6 +17,7 @@ namespace Capstone.Classes
 
         public void ReadFiles()
         {
+            CateringSystem newItem = new CateringSystem();
 
             using (StreamReader fileInput = new StreamReader(sourceFile))
 
@@ -26,28 +27,29 @@ namespace Capstone.Classes
                 {
                     string line = fileInput.ReadLine();
                     string[] CateringItemArray = line.Split("|");
+                    
                     if (CateringItemArray[0] == "B")
                     {
                         Beverages bev = new Beverages(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-
+                        newItem.AddCateringItem(bev);
                     }
 
                     else if (CateringItemArray[0] == "A")
                     {
                         Appetizers app = new Appetizers(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-
+                        newItem.AddCateringItem(app);
                     }
 
                     else if (CateringItemArray[0] == "E")
                     {
                         Entrees ent = new Entrees(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-
+                        newItem.AddCateringItem(ent);
                     }
 
                     else if (CateringItemArray[0] == "D")
                     {
                         Dessert des = new Dessert(CateringItemArray[2], double.Parse(CateringItemArray[3]), CateringItemArray[1], 10);
-
+                        newItem.AddCateringItem(des);
                     }
                 }
 

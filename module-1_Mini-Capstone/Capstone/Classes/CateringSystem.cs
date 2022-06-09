@@ -24,8 +24,24 @@ namespace Capstone.Classes
                 Balance += deposit;
             }
             
-
         }
-   
+        public void AddCateringItem(CateringItem item)
+        {
+            items.Add(item);
+        }
+        
+        public void DisplayCateringItems()
+        {
+            foreach(CateringItem item in items)
+            {
+                if (item.Quantity == 0)
+                {
+                    Console.WriteLine($"{item.Name} ~~ {item.ID} ~~ ${item.Price} ~~ SOLD OUT ");
+                }
+                Console.WriteLine($"{item.Name} ~~ {item.ID} ~~ ${item.Price} ~~ {item.Quantity} ");
+                // name, id, price, quantity
+            }
+           
+        }
     }
 }

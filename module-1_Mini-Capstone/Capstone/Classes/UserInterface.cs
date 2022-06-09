@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
+
 
 namespace Capstone.Classes
 {
@@ -11,9 +13,12 @@ namespace Capstone.Classes
     public class UserInterface
     {
         private CateringSystem catering = new CateringSystem();
-
+        private FileAccess file = new FileAccess();
+        
+        
         public void RunMainMenu()
         {
+            file.ReadFiles();
             bool quitMainMenu = false;
 
             while (!quitMainMenu)
@@ -28,7 +33,7 @@ namespace Capstone.Classes
 
                 if(mainMenuChoice == "(1)" || mainMenuChoice == "1" || mainMenuChoice == "one" || mainMenuChoice == "One")
                 {
-
+                    catering.DisplayCateringItems();
                 }
                     // do DisplayCateringItems() method, bro
 

@@ -9,8 +9,7 @@ namespace CapstoneTests
     [TestClass]
     public class CateringSystemTests
     {
-<<<<<<< HEAD
-=======
+
         [DataTestMethod]
         [DataRow(10)]
         [DataRow(1000)]
@@ -40,7 +39,7 @@ namespace CapstoneTests
             // Assert
             Assert.AreEqual(0, sut.Balance);
         }
->>>>>>> 2f27761e9782ab5601166bb38259ed27efc2ef2c
+
 
 
     }
