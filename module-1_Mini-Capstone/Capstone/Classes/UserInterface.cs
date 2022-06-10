@@ -89,9 +89,8 @@ namespace Capstone.Classes
 
                     Console.WriteLine("Please enter the quantity you would like to purchase.");
                     int productAmount = int.Parse(Console.ReadLine());
+
                     catering.SelectProduct(selectProductChoice, productAmount);
-                    
-                    // do SelectProducts() method, bro
                 }
 
                 if (orderMenuChoice == "(3)" || orderMenuChoice == "3" || orderMenuChoice == "three" || orderMenuChoice == "Three")

@@ -72,6 +72,8 @@ namespace Capstone.Classes
                 Console.WriteLine($"Insufficient stock for amount requested.");
             }
 
+
+
         }
     }  
 }
