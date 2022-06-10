@@ -78,7 +78,7 @@ namespace Capstone.Classes
 
                 Console.WriteLine("(3) Complete Transaction");
 
-                Console.WriteLine($"Your Current Account Balance is: ${catering.Balance}");
+                Console.WriteLine($"Your Current Account Balance is: ${Math.Round(catering.Balance, 2)}");
 
                 string orderMenuChoice = Console.ReadLine();
 
@@ -122,8 +122,7 @@ namespace Capstone.Classes
                     {
                         Console.WriteLine(purchase);
                     }
-
-                    // do CompleteTransaction() method, bro
+                    Console.WriteLine($"Total: ${catering.PrintAmountSpent()}");
 
                     Console.WriteLine(catering.ReturnMoney());
                     quitOrderMenu = true;

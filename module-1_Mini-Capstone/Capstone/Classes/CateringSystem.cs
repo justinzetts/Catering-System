@@ -14,7 +14,9 @@ namespace Capstone.Classes
 
         }
         private Dictionary<string, CateringItem> items = new Dictionary<string, CateringItem>();
-        List<CateringItem> purchasedItems = new List<CateringItem>();
+        List<string> purchaseReportLines = new List<string>();
+        double amountSpent = 0;
+        List<string> auditEntries = new List<string>();
 
         public double Balance { get; set; } = 0;
 
@@ -62,7 +64,8 @@ namespace Capstone.Classes
             else if ((Balance + deposit) <= 1000 && Balance + deposit >= 0)
             { // Merritt said I could break this
                 Balance += deposit;
-                return $"Your new Balance is: ${Balance}";
+                auditEntries.Add($"{DateTime.Now} ADD MONEY: ${deposit} ${Balance} ");
+                return $"Your new Balance is: ${Math.Round(Balance, 2)}";
             }
             else if (Balance + deposit > 1000)
             {
@@ -81,7 +84,7 @@ namespace Capstone.Classes
             bool choiceIsInDictionary = items.ContainsKey(choice);
             int amountAvailable = items[choice].Quantity;
             double costOfPurchase = items[choice].Price * amountToPurchase;
-            
+
 
 
             if (choiceIsInDictionary && (amountAvailable - amountToPurchase) >= 0 && (Balance >= costOfPurchase))
@@ -89,30 +92,34 @@ namespace Capstone.Classes
                 //if purchase will be successful
                 items[choice].Quantity -= amountToPurchase;
                 Balance -= (costOfPurchase);
-                purchasedItems.Add(items[choice]);
-                return $"Your purchase of {choice} was successful, your new balance is ${Balance}";
-                
+                purchaseReportLines.Add($"{amountToPurchase} {items[choice].GetType().Name} {items[choice].Name} ${items[choice].Price} ${Math.Round(amountToPurchase * items[choice].Price, 2)}");
+                amountSpent += Math.Round(amountToPurchase * items[choice].Price, 2);
 
+
+                auditEntries.Add($"{DateTime.Now} {amountToPurchase} {items[choice].Name} {items[choice].ID} {costOfPurchase} {Balance} ");
+
+                return $"Your purchase of {choice} was successful, your new balance is ${Math.Round(Balance, 2)}";
             }
             else if (!choiceIsInDictionary) // item does not exist
             {
                 return $"Sorry your selected choice of {choice} does not exist, please select product listed above.";
-               
+
             }
             else if (amountAvailable <= 0) //Item sold out
             {
                 return $"We are currently out of {choice}, please select different item";
-                
+
             }
             else if ((amountAvailable - amountToPurchase) < 0) //insufficient stock amount
             {
-                return "Insufficient stock for amount requested.";  
+                return "Insufficient stock for amount requested.";
 
             }
-            else
+            else if (Balance < costOfPurchase)
             {
-                return "random thing we didn't think about";
+                return "Insufficient funds. Please add enough money before attempting this purchase.";
             }
+            return "Whoa, you really broke the code this time, huh? Nice. :(";
         }
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE CHANGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -126,7 +133,7 @@ namespace Capstone.Classes
             int numberOfQuarters = 0;
             int numberOfDimes = 0;
             int numberOfNickels = 0;
-
+            int totalChange = numberOf20s + numberOf10s + numberOf5s + numberOf1s + numberOfQuarters + numberOfDimes + numberOfNickels;
             while (Balance >= 0.05)
             {
                 if (Balance / 20 >= 1)
@@ -169,22 +176,19 @@ namespace Capstone.Classes
             change = $"Your change will be returned as follows: {numberOf20s} Twenty Dollar Bill(s), {numberOf10s} Ten Dollar Bill(s)," +
                 $"{numberOf5s} Five Dollar Bill(s), {numberOf1s} One Dollar Bill(s), {numberOfQuarters} Quarter(s), {numberOfDimes} Dime(s), & {numberOfNickels} Nickel(s).";
             Balance = 0;
+            auditEntries.Add($"{DateTime.Now} GIVE CHANGE: ${totalChange} ${Balance} ");
             return change;
         }
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COMPLETE TRANSACTION REPORT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public List<string> BuildScreenReport()
         {
-            List<string> report = new List<string>();
-            
-            foreach (CateringItem purchase in purchasedItems)
-            {
-                report.Add($"{purchase.Quantity}     {purchase.GetType().Name}   {purchase.Name}     ${purchase.Price}    ${purchase.Price * purchase.Quantity}   ");
-                
+            return purchaseReportLines;
+        }
 
-            }
-            return report;
-
+        public double PrintAmountSpent()
+        {
+            return amountSpent;
         }
 
     }  
