@@ -14,8 +14,44 @@ namespace Capstone.Classes
 
         }
         private Dictionary<string, CateringItem> items = new Dictionary<string, CateringItem>();
-        public List<CateringItem> purchasedItems = new List<CateringItem>();
+        List<CateringItem> purchasedItems = new List<CateringItem>();
+
         public double Balance { get; set; } = 0;
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METHODS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+       
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FILE I/O >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        public void AddCateringItem(string id, CateringItem item)
+        {
+            items.Add(item.ID, item);
+        }
+       
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DISPLAY ITEMS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+       
+
+        public List<string> BuildCateringMenu()
+        {
+            List<string> menu = new List<string>();
+            foreach (KeyValuePair<string, CateringItem> kvp in items)
+            {
+                if (kvp.Value.Quantity == 0)
+                {
+                     menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ SOLD OUT ");
+                }
+                 menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
+                // name, id, price, quantity
+            }
+            return menu; 
+        }
+
+        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ORDERING MENU METHODS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD MONEY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string AddMoney(int deposit)
         {
 
@@ -28,36 +64,18 @@ namespace Capstone.Classes
                 Balance += deposit;
                 return $"Your new Balance is: ${Balance}";
             }
-            else if(Balance + deposit > 1000)
+            else if (Balance + deposit > 1000)
             {
                 return "I already told you to keep it under $1000, stop wasting my time and try again.";
             }
-            else 
+            else
             {
                 return "I blame John for this.";
             }
 
         }
-        public void AddCateringItem(string id, CateringItem item)
-        {
-            items.Add(item.ID, item);
-        }
 
-        public void BuildCateringMenu(List<string> menu)
-        {
-            
-            foreach (KeyValuePair<string, CateringItem> kvp in items)
-            {
-                if (kvp.Value.Quantity == 0)
-                {
-                     menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ SOLD OUT ");
-                }
-                 menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
-                // name, id, price, quantity
-            }
-             
-        }
-
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SELECT PRODUCT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string SelectProduct(string choice, int amountToPurchase)
         {
             bool choiceIsInDictionary = items.ContainsKey(choice);
@@ -97,6 +115,7 @@ namespace Capstone.Classes
             }
         }
 
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE CHANGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string ReturnMoney()
         {
             string change;
@@ -149,7 +168,23 @@ namespace Capstone.Classes
 
             change = $"Your change will be returned as follows: {numberOf20s} Twenty Dollar Bill(s), {numberOf10s} Ten Dollar Bill(s)," +
                 $"{numberOf5s} Five Dollar Bill(s), {numberOf1s} One Dollar Bill(s), {numberOfQuarters} Quarter(s), {numberOfDimes} Dime(s), & {numberOfNickels} Nickel(s).";
+            Balance = 0;
             return change;
+        }
+
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COMPLETE TRANSACTION REPORT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        public List<string> BuildScreenReport()
+        {
+            List<string> report = new List<string>();
+            
+            foreach (CateringItem purchase in purchasedItems)
+            {
+                report.Add($"{purchase.Quantity}     {purchase.GetType().Name}   {purchase.Name}     ${purchase.Price}    ${purchase.Price * purchase.Quantity}   ");
+                
+
+            }
+            return report;
+
         }
 
     }  
