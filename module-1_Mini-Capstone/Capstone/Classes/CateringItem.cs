@@ -30,7 +30,7 @@ namespace Capstone.Classes
             this.Quantity = quantity;
         }
 
-
+        public CateringItem() { }
 
     }
 }

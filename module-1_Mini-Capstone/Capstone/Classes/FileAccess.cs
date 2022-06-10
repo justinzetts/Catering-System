@@ -14,7 +14,8 @@ namespace Capstone.Classes
         // All external data files for this application should live in this directory.
         // You will likely need to create this directory and copy / paste any needed files.
         private const string sourceFile = @"C:\Catering\cateringsystem.csv";
-
+        private const string destinationLogFile = @"C:\Catering\log.txt";
+        CateringSystem auditList = new CateringSystem();
         public void ReadFiles(CateringSystem system)
         {
             
@@ -52,21 +53,32 @@ namespace Capstone.Classes
                         system.AddCateringItem(CateringItemArray[2], des);
                     }
                 }
-
-
             }
         }
+        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Write File  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         public void WriteAuditLog()
         {
+            using (StreamWriter sw = new StreamWriter(destinationLogFile, true))
+            {
+                List<string> auditLogStrings = auditList.GetAuditEntries();
+                foreach (string log in auditLogStrings)
+                {
+                    sw.WriteLine(log);
+                }
+
+
+
+
+
+
+            }
+
 
         }
-        
+
         // These files should be read from / written to in the DataDirectory
         private const string CateringFileName = @"cateringsystem.csv";
         private const string ReportFileName = @"totalsales.txt";
     }
-
-
-
 }

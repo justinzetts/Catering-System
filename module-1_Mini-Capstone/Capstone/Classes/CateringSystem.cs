@@ -29,6 +29,11 @@ namespace Capstone.Classes
         {
             items.Add(item.ID, item);
         }
+
+        public List<string> GetAuditEntries()
+        {
+            return auditEntries;
+        }
        
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DISPLAY ITEMS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -139,37 +144,44 @@ namespace Capstone.Classes
                 if (Balance / 20 >= 1)
                 {
                     numberOf20s = Convert.ToInt32(Math.Floor(Balance / 20));
-                    Balance -= 20 * numberOf20s;
+                    Balance -= (20 * numberOf20s);
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / 10 >= 1)
                 {
                     numberOf10s = Convert.ToInt32(Math.Floor(Balance / 10));
                     Balance -= 10 * numberOf10s;
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / 5 >= 1)
                 {
                     numberOf5s = Convert.ToInt32(Math.Floor(Balance / 5));
                     Balance -= 5 * numberOf5s;
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / 1 >= 1)
                 {
                     numberOf1s = Convert.ToInt32(Math.Floor(Balance / 1));
                     Balance -= numberOf1s;
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / .25 >= 1)
                 {
                     numberOfQuarters = Convert.ToInt32(Math.Floor(Balance / .25));
                     Balance -= numberOfQuarters * .25;
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / .1 >= 1)
                 {
                     numberOfDimes = Convert.ToInt32(Math.Floor(Balance / .1));
                     Balance -= numberOfDimes * .1;
+                    Balance = Math.Round(Balance, 2);
                 }
                 else if (Balance / .05 >= 1)
                 {
                     numberOfNickels = Convert.ToInt32(Math.Floor(Balance / .05));
                     Balance -= numberOfNickels * .05;
+                    Balance = Math.Round(Balance, 2);
                 }
             }
 

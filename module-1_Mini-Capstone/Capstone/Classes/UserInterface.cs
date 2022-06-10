@@ -53,6 +53,7 @@ namespace Capstone.Classes
 
                 else if (mainMenuChoice == "(3)" || mainMenuChoice == "3" || mainMenuChoice == "three" || mainMenuChoice == "Three")
                 {
+                    file.WriteAuditLog();
                     quitMainMenu = true;
                 }
                 else
@@ -122,9 +123,12 @@ namespace Capstone.Classes
                     {
                         Console.WriteLine(purchase);
                     }
-                    Console.WriteLine($"Total: ${catering.PrintAmountSpent()}");
+                    Console.WriteLine($"Total: ${Math.Round(catering.PrintAmountSpent(), 2)}");
 
                     Console.WriteLine(catering.ReturnMoney());
+
+                    
+
                     quitOrderMenu = true;
 
                 }
