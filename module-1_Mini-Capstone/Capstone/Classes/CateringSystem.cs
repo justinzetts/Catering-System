@@ -14,7 +14,7 @@ namespace Capstone.Classes
 
         }
         private Dictionary<string, CateringItem> items = new Dictionary<string, CateringItem>();
-
+        public List<CateringItem> purchasedItems = new List<CateringItem>();
         public double Balance { get; set; } = 0;
         public void AddMoney(int deposit)
         {
@@ -43,12 +43,33 @@ namespace Capstone.Classes
             }
         }
 
-        public void SelectProduct(string choice, int amount)
+        public void SelectProduct(string choice, int amountToPurchase)
         {
-            if (items.ContainsKey(choice) && items[choice].Quantity - amount >= 0 && (Balance >= ((items[choice].Price * amount))))
+            bool choiceIsInDictionary = items.ContainsKey(choice);
+            int itemQuantity = items[choice].Quantity;
+            double costOfPurchase = items[choice].Price * amountToPurchase;
+
+            if (choiceIsInDictionary && (itemQuantity - amountToPurchase) >= 0 && (Balance >= costOfPurchase))
             {
-                items[choice].Quantity -= amount;
-                Balance -= (items[choice].Price * amount);
+                //if purchase will be successful
+                items[choice].Quantity -= amountToPurchase;
+                Balance -= (costOfPurchase);
+                purchasedItems.Add(items[choice]);
+
+            }
+            else if (!choiceIsInDictionary)
+            {
+                Console.WriteLine($"Sorry your selected choice of {choice} does not exist, please select product listed above.");
+                
+            }
+            else if(itemQuantity<= 0)
+            {
+                Console.WriteLine($"We are currently out of {choice}, please select different item");
+                
+            }
+            else if ((itemQuantity - amountToPurchase) < 0)
+            {
+                Console.WriteLine($"Insufficient stock for amount requested.");
             }
 
         }
