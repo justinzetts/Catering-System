@@ -33,7 +33,12 @@ namespace Capstone.Classes
 
                 if(mainMenuChoice == "(1)" || mainMenuChoice == "1" || mainMenuChoice == "one" || mainMenuChoice == "One")
                 {
-                    catering.DisplayCateringItems();
+                    List<string> menu = new List<string>();
+                    catering.BuildCateringMenu(menu); 
+                    foreach(string menuItem in menu)
+                    {
+                        Console.WriteLine(menuItem);
+                    }
                 }
                     // do DisplayCateringItems() method, bro
 
@@ -65,7 +70,7 @@ namespace Capstone.Classes
 
                 Console.WriteLine("(3) Complete Transaction");
 
-                Console.WriteLine($"Your Current Account Balance is: {catering.Balance}");
+                Console.WriteLine($"Your Current Account Balance is: ${catering.Balance}");
 
                 string orderMenuChoice = Console.ReadLine();
 
@@ -75,9 +80,10 @@ namespace Capstone.Classes
 
                     Console.WriteLine("How much money would you like to add? ");
                     Console.WriteLine("Deposit amount must be in whole dollars (1/5/25/50?)");
+                    Console.WriteLine("Balance may not exceed $1000");
                     int deposit = int.Parse(Console.ReadLine());
                     // do AddMoney() method, bro
-                    catering.AddMoney(deposit);
+                    Console.WriteLine(catering.AddMoney(deposit)); 
 
 
                 }
@@ -86,22 +92,30 @@ namespace Capstone.Classes
                 {
                     Console.WriteLine("Please enter the product ID of the item you'd like to purchase");
                     string selectProductChoice = Console.ReadLine();
-
+                    string upProductID = selectProductChoice.ToUpper();
                     Console.WriteLine("Please enter the quantity you would like to purchase.");
                     int productAmount = int.Parse(Console.ReadLine());
-
-                    catering.SelectProduct(selectProductChoice, productAmount);
+                    
+                    Console.WriteLine(catering.SelectProduct(upProductID, productAmount));
+                    
+                    // do SelectProducts() method, bro
                 }
 
                 if (orderMenuChoice == "(3)" || orderMenuChoice == "3" || orderMenuChoice == "three" || orderMenuChoice == "Three")
                 {
                     quitOrderMenu = true;
-                    
+
+                    // do CompleteTransaction() method, bro
+
+                    Console.WriteLine(catering.ReturnMoney());
+                   
+
                 }
             }
             return;
 
 
         }
-    }
+ 
+}
 }
