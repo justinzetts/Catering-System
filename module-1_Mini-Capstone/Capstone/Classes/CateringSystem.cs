@@ -23,6 +23,10 @@ namespace Capstone.Classes
             { // Merritt said I could break this
                 Balance += deposit;
             }
+            else if(Balance + deposit > 1000)
+            {
+                Console.WriteLine( "I already told you to keep it under $1000, stop wasting my time and try again.");
+            }
 
         }
         public void AddCateringItem(string id, CateringItem item)
@@ -48,28 +52,33 @@ namespace Capstone.Classes
             bool choiceIsInDictionary = items.ContainsKey(choice);
             int itemQuantity = items[choice].Quantity;
             double costOfPurchase = items[choice].Price * amountToPurchase;
+            bool purchaseComplete = false;
 
-            if (choiceIsInDictionary && (itemQuantity - amountToPurchase) >= 0 && (Balance >= costOfPurchase))
+            while (!purchaseComplete)
             {
-                //if purchase will be successful
-                items[choice].Quantity -= amountToPurchase;
-                Balance -= (costOfPurchase);
-                purchasedItems.Add(items[choice]);
+                if (choiceIsInDictionary && (itemQuantity - amountToPurchase) >= 0 && (Balance >= costOfPurchase))
+                {
+                    //if purchase will be successful
+                    items[choice].Quantity -= amountToPurchase;
+                    Balance -= (costOfPurchase);
+                    purchasedItems.Add(items[choice]);
+                    purchaseComplete = true;
 
-            }
-            else if (!choiceIsInDictionary)
-            {
-                Console.WriteLine($"Sorry your selected choice of {choice} does not exist, please select product listed above.");
-                
-            }
-            else if(itemQuantity<= 0)
-            {
-                Console.WriteLine($"We are currently out of {choice}, please select different item");
-                
-            }
-            else if ((itemQuantity - amountToPurchase) < 0)
-            {
-                Console.WriteLine($"Insufficient stock for amount requested.");
+                }
+                else if (!choiceIsInDictionary)
+                {
+                    Console.WriteLine($"Sorry your selected choice of {choice} does not exist, please select product listed above.");
+                    purchaseComplete = true;
+                }
+                else if (itemQuantity <= 0)
+                {
+                    Console.WriteLine($"We are currently out of {choice}, please select different item");
+
+                }
+                else if ((itemQuantity - amountToPurchase) < 0)
+                {
+                    Console.WriteLine($"Insufficient stock for amount requested.");
+                }
             }
 
         }
