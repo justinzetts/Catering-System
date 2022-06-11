@@ -15,6 +15,8 @@ namespace Capstone.Classes
         // You will likely need to create this directory and copy / paste any needed files.
         private const string sourceFile = @"C:\Catering\cateringsystem.csv";
         private const string destinationLogFile = @"C:\Catering\log.txt";
+        private const string destinationTotalSalesFile = @"C:\Catering\totalsales.txt";
+        private const string SourceTotalSalesFile = @"C:\Catering\totalsalessource.txt";
         CateringSystem auditList = new CateringSystem();
         public void ReadFiles(CateringSystem system)
         {
@@ -67,19 +69,41 @@ namespace Capstone.Classes
                 {
                     sw.WriteLine(log);
                 }
-
-
-
-
-
-
             }
-
-
         }
+
+
+        //public void WriteTotalSalesLog(CateringItem item)
+        //{
+        //    List<string> totalSalesList = new List<string>();
+        //    using (StreamReader sr = new StreamReader(SourceTotalSalesFile))
+        //    using (StreamWriter sw = new StreamWriter(destinationTotalSalesFile, false))
+        //    {
+
+        //    double totalSalesVariable = 0;
+        //    for (int i = 0; i < 18; i++)
+        //        {
+        //            string line = sr.ReadLine();
+        //            string[] totalSalesArray = line.Split("|");
+
+        //            string itemName = item.Name;
+        //            int numberSold = int.Parse(totalSalesArray[1]);
+        //            string[] arrayIndex2WithoutDollarSign = totalSalesArray[2].Split("$");
+        //            double revenueSold = double.Parse(arrayIndex2WithoutDollarSign[1]);
+
+        //            numberSold += item.TotalAmountPurchased;
+        //            revenueSold += item.TotalRevenue;
+        //            totalSalesVariable += item.TotalRevenue;
+
+        //            sw.WriteLine(@$"{item.Name}|{numberSold}|${revenueSold}");
+
+        //            // need to copt TotalSales.txt to TotalSalesSource.txt as final step
+        //        }
+        //    }
+        //}
 
         // These files should be read from / written to in the DataDirectory
         private const string CateringFileName = @"cateringsystem.csv";
-        private const string ReportFileName = @"totalsales.txt";
+        private const string SourceReportFileName = @"totalsales.txt";
     }
 }

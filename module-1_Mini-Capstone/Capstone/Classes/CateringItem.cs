@@ -22,6 +22,10 @@ namespace Capstone.Classes
 
         public int Quantity { get; set; } = 10;
 
+        public int TotalAmountPurchased { get; set; } = 0;
+
+        public double TotalRevenue { get; set; } = 0;
+
         public CateringItem(string name, double price, string id, int quantity)
         {
             this.Name = name;
