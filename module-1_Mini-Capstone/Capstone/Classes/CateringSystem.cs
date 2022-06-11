@@ -25,7 +25,7 @@ namespace Capstone.Classes
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FILE I/O >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        public void AddCateringItem(string id, CateringItem item)
+        public void AddCateringItem(CateringItem item)
         {
             items.Add(item.ID, item);
         }
@@ -39,7 +39,7 @@ namespace Capstone.Classes
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DISPLAY ITEMS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
        
 
-        public List<string> BuildCateringMenu()
+        public List<string> BuildCateringMenu()                                                                                     //****
         {
             List<string> menu = new List<string>();
             foreach (KeyValuePair<string, CateringItem> kvp in items)
@@ -48,7 +48,10 @@ namespace Capstone.Classes
                 {
                      menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ SOLD OUT ");
                 }
-                 menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
+                else
+                {
+                    menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
+                }
                 // name, id, price, quantity
             }
             return menu; 
@@ -87,44 +90,53 @@ namespace Capstone.Classes
         public string SelectProduct(string choice, int amountToPurchase)
         {
             bool choiceIsInDictionary = items.ContainsKey(choice);
-            int amountAvailable = items[choice].Quantity;
-            double costOfPurchase = items[choice].Price * amountToPurchase;
+            
 
-
-
-            if (choiceIsInDictionary && (amountAvailable - amountToPurchase) >= 0 && (Balance >= costOfPurchase))
+            if (choiceIsInDictionary)
             {
-                //if purchase will be successful
-                items[choice].Quantity -= amountToPurchase;
-                Balance -= (costOfPurchase);
+                int amountAvailable = items[choice].Quantity;
+                double costOfPurchase = items[choice].Price * amountToPurchase;
+
+                if ((amountAvailable - amountToPurchase) >= 0 && (Balance >= costOfPurchase) && amountToPurchase > 0)
+                {
+                    //if purchase will be successful
+                    items[choice].Quantity -= amountToPurchase;
+                    Balance -= (costOfPurchase);
+
+                    purchaseReportLines.Add($"{amountToPurchase} {items[choice].GetType().Name} {items[choice].Name} ${items[choice].Price} ${Math.Round(amountToPurchase * items[choice].Price, 2)}");
+
+                    amountSpent += Math.Round(amountToPurchase * items[choice].Price, 2);
+
+
+                    auditEntries.Add($"{DateTime.Now} {amountToPurchase} {items[choice].Name} {items[choice].ID} {costOfPurchase} {Balance} ");
+
+                    return $"Your purchase of {choice} was successful, your new balance is ${Math.Round(Balance, 2)}";
+                }
+                else if (amountAvailable <= 0) //Item sold out
+                {
+                    return $"We are currently out of {choice}, please select different item";
+
+                }
+                else if ((amountAvailable - amountToPurchase) < 0) //insufficient stock amount
+                {
+                    return "Insufficient stock for amount requested.";
+
+                }
+                else if (Balance < costOfPurchase)
+                {
+                    return "Insufficient funds. Please add enough money before attempting this purchase.";
+                }
+                else if (amountToPurchase <= 0)
+                {
+                    return "You're a troll, pick a real amount over zero";
+                }
+            }
+            else
+            {
                 
-                purchaseReportLines.Add($"{amountToPurchase} {items[choice].GetType().Name} {items[choice].Name} ${items[choice].Price} ${Math.Round(amountToPurchase * items[choice].Price, 2)}");
-               
-                amountSpent += Math.Round(amountToPurchase * items[choice].Price, 2);
+                    return $"Sorry your selected choice of {choice} does not exist, please select product listed above.";
 
-
-                auditEntries.Add($"{DateTime.Now} {amountToPurchase} {items[choice].Name} {items[choice].ID} {costOfPurchase} {Balance} ");
-
-                return $"Your purchase of {choice} was successful, your new balance is ${Math.Round(Balance, 2)}";
-            }
-            else if (!choiceIsInDictionary) // item does not exist
-            {
-                return $"Sorry your selected choice of {choice} does not exist, please select product listed above.";
-
-            }
-            else if (amountAvailable <= 0) //Item sold out
-            {
-                return $"We are currently out of {choice}, please select different item";
-
-            }
-            else if ((amountAvailable - amountToPurchase) < 0) //insufficient stock amount
-            {
-                return "Insufficient stock for amount requested.";
-
-            }
-            else if (Balance < costOfPurchase)
-            {
-                return "Insufficient funds. Please add enough money before attempting this purchase.";
+                
             }
             return "Whoa, you really broke the code this time, huh? Nice. :(";
         }
