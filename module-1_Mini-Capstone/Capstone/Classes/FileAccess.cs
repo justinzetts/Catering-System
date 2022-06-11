@@ -57,11 +57,12 @@ namespace Capstone.Classes
         }
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Write File  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-        public void WriteAuditLog()
+        public void WriteAuditLog(CateringSystem system) //when you're declaring it you're making a new instance of it, which does not have the stored values
+                                                         //the reason this works is because we're using a the same cateringSystem object we declared when the system starts
         {
             using (StreamWriter sw = new StreamWriter(destinationLogFile, true))
             {
-                List<string> auditLogStrings = auditList.GetAuditEntries();
+                List<string> auditLogStrings = system.GetAuditEntries();
                 foreach (string log in auditLogStrings)
                 {
                     sw.WriteLine(log);

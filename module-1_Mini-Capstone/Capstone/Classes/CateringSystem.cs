@@ -97,7 +97,9 @@ namespace Capstone.Classes
                 //if purchase will be successful
                 items[choice].Quantity -= amountToPurchase;
                 Balance -= (costOfPurchase);
+                
                 purchaseReportLines.Add($"{amountToPurchase} {items[choice].GetType().Name} {items[choice].Name} ${items[choice].Price} ${Math.Round(amountToPurchase * items[choice].Price, 2)}");
+               
                 amountSpent += Math.Round(amountToPurchase * items[choice].Price, 2);
 
 
