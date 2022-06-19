@@ -128,7 +128,7 @@ namespace Capstone.Classes
                     Console.WriteLine("Please enter the quantity you would like to purchase.");
                     int productAmount = int.Parse(Console.ReadLine());
                     
-                    Console.WriteLine(catering.SelectProduct(upProductID, productAmount));
+                    Console.WriteLine(catering.SelectProduct(upProductID, productAmount, file));
                     
                     // do SelectProducts() method, bro
                 }

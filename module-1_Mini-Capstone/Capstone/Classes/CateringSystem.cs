@@ -87,7 +87,7 @@ namespace Capstone.Classes
         }
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SELECT PRODUCT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        public string SelectProduct(string choice, int amountToPurchase)
+        public string SelectProduct(string choice, int amountToPurchase, FileAccess file)
         {
             bool choiceIsInDictionary = items.ContainsKey(choice);
             
@@ -109,6 +109,10 @@ namespace Capstone.Classes
 
 
                     auditEntries.Add($"{DateTime.Now} {amountToPurchase} {items[choice].Name} {items[choice].ID} {costOfPurchase} {Balance} ");
+
+                    items[choice].TotalAmountPurchased += amountToPurchase;
+                    items[choice].TotalRevenue += Math.Round(amountToPurchase * items[choice].Price, 2);
+
 
                     return $"Your purchase of {choice} was successful, your new balance is ${Math.Round(Balance, 2)}";
                 }
