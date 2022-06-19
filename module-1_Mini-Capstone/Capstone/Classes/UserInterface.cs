@@ -25,17 +25,23 @@ namespace Capstone.Classes
 
             while (!quitMainMenu)
             {
+                Console.WriteLine();
                 Console.WriteLine("(1) Display Catering Items");
 
                 Console.WriteLine("(2) Order");
 
                 Console.WriteLine("(3) Quit");
+                Console.WriteLine();
 
                 string mainMenuChoice = Console.ReadLine();
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OPTION 1 (DISPLAY CATERING ITEMS) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
                 if(mainMenuChoice == "(1)" || mainMenuChoice == "1" || mainMenuChoice == "one" || mainMenuChoice == "One")
                 {
+                    
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine();
                     List<string> menu = catering.BuildCateringMenu(); 
                      
                     foreach(string menuItem in menu)
@@ -47,6 +53,7 @@ namespace Capstone.Classes
 
                 else if(mainMenuChoice == "(2)" || mainMenuChoice == "2" || mainMenuChoice == "two" || mainMenuChoice == "Two")
                 {
+                    Console.Clear();
                     RunOrderMenu();
                 }
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OPTION 3 (QUIT PROGRAM) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -73,21 +80,24 @@ namespace Capstone.Classes
 
             while (!quitOrderMenu)
             {
+                Console.WriteLine();
                 Console.WriteLine("(1) Add Money");
 
                 Console.WriteLine("(2) Select Products");
 
                 Console.WriteLine("(3) Complete Transaction");
-
+                Console.WriteLine();
                 Console.WriteLine($"Your Current Account Balance is: ${Math.Round(catering.Balance, 2)}");
-
+                Console.WriteLine();
                 string orderMenuChoice = Console.ReadLine();
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> OPTION 1 (ADD MONEY) >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
                 if (orderMenuChoice == "(1)" || orderMenuChoice == "1" || orderMenuChoice == "one" || orderMenuChoice == "One")
                 {
-
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine();
 
                     Console.WriteLine("How much money would you like to add? ");
                     Console.WriteLine("Deposit amount must be in whole dollars (1/5/25/50?)");
@@ -103,6 +113,15 @@ namespace Capstone.Classes
 
                 if (orderMenuChoice == "(2)" || orderMenuChoice == "2" || orderMenuChoice == "two" || orderMenuChoice == "Two")
                 {
+                    Console.Clear();
+                    Console.WriteLine();
+                    List<string> menu = catering.BuildCateringMenu();
+
+                    foreach (string menuItem in menu)
+                    {
+                        Console.WriteLine(menuItem);
+                    }
+
                     Console.WriteLine("Please enter the product ID of the item you'd like to purchase");
                     string selectProductChoice = Console.ReadLine();
                     string upProductID = selectProductChoice.ToUpper();
@@ -118,6 +137,8 @@ namespace Capstone.Classes
 
                 if (orderMenuChoice == "(3)" || orderMenuChoice == "3" || orderMenuChoice == "three" || orderMenuChoice == "Three")
                 {
+                    Console.Clear();
+                    Console.WriteLine();
                     List<string> purchaseReport = catering.BuildScreenReport();
                     foreach (string purchase in purchaseReport)
                     {

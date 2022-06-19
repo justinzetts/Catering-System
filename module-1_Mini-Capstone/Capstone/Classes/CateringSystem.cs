@@ -143,7 +143,7 @@ namespace Capstone.Classes
 
         //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE CHANGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string ReturnMoney()
-        {
+        { 
             string change;
             int numberOf20s = 0;
             int numberOf10s = 0;

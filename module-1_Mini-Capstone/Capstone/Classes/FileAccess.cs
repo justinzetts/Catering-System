@@ -66,12 +66,13 @@ namespace Capstone.Classes
                 foreach (string log in auditLogStrings)
                 {
                     sw.WriteLine(log);
+                    
                 }
 
 
 
 
-
+                
 
             }
 
