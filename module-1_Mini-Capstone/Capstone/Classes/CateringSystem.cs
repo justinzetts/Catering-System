@@ -126,7 +126,7 @@ namespace Capstone.Classes
         /* Project required the customer's money to be returned using nickels, dimes, quarters, ones, fives, 
            tens, and twenties. (using the smallest amount of bills and coins possible) */
         public string ReturnMoney()
-        {
+        { 
             string change;
             int numberOf20s = 0;
             int numberOf10s = 0;

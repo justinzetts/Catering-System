@@ -18,17 +18,23 @@ namespace Capstone.Classes
 
             while (!quitMainMenu)
             {
+                Console.WriteLine();
                 Console.WriteLine("(1) Display Catering Items");
 
                 Console.WriteLine("(2) Order");
 
                 Console.WriteLine("(3) Quit");
+                Console.WriteLine();
 
                 string mainMenuChoice = Console.ReadLine();
 
                 // Catering items are read from a file and populated into CateringItem subclasses to be displayed for the user here
                 if(mainMenuChoice == "(1)" || mainMenuChoice == "1" || mainMenuChoice == "one" || mainMenuChoice == "One")
                 {
+                    
+                    Console.Clear();
+                    Console.WriteLine();
+                    Console.WriteLine();
                     List<string> menu = catering.BuildCateringMenu(); 
                      
                     foreach(string menuItem in menu)
@@ -40,6 +46,7 @@ namespace Capstone.Classes
                 // OrderMenu allows user to add funds, queue items to be purchased, and complete transaction
                 else if(mainMenuChoice == "(2)" || mainMenuChoice == "2" || mainMenuChoice == "two" || mainMenuChoice == "Two")
                 {
+                    Console.Clear();
                     RunOrderMenu();
                 }
 
@@ -60,14 +67,15 @@ namespace Capstone.Classes
         {
             while (!quitOrderMenu)
             {
+                Console.WriteLine();
                 Console.WriteLine("(1) Add Money");
 
                 Console.WriteLine("(2) Select Products");
 
                 Console.WriteLine("(3) Complete Transaction");
-
+                Console.WriteLine();
                 Console.WriteLine($"Your Current Account Balance is: ${Math.Round(catering.Balance, 2)}");
-
+                Console.WriteLine();
                 string orderMenuChoice = Console.ReadLine();
 
                 // User can add money to their account to later spend on purchasing items
