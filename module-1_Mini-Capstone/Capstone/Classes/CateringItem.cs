@@ -20,7 +20,7 @@ namespace Capstone.Classes
 
         public string ID { get; set; }
 
-        public int Quantity { get; set; } = 10;
+        public int Quantity { get; set; } = 10; // all CateringItems default to a quantity of 10
 
         public int TotalAmountPurchased { get; set; } = 0;
 

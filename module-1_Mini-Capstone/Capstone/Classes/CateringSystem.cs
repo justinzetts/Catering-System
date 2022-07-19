@@ -5,7 +5,7 @@ using System.Text;
 namespace Capstone.Classes
 {
     /// <summary>
-    /// This class should contain all the "work" for catering system management
+    /// This class contains all the "work" for catering system management
     /// </summary>
     public class CateringSystem
     {
@@ -20,11 +20,6 @@ namespace Capstone.Classes
 
         public double Balance { get; set; } = 0;
 
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> METHODS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>         >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-       
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> FILE I/O >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public void AddCateringItem(CateringItem item)
         {
             items.Add(item.ID, item);
@@ -34,10 +29,6 @@ namespace Capstone.Classes
         {
             return auditEntries;
         }
-       
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> DISPLAY ITEMS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-       
 
         public List<string> BuildCateringMenu()                                                                                     //****
         {
@@ -52,58 +43,49 @@ namespace Capstone.Classes
                 {
                     menu.Add($"{kvp.Value.Name} ~~ {kvp.Value.ID} ~~ ${kvp.Value.Price} ~~ {kvp.Value.Quantity} ");
                 }
-                // name, id, price, quantity
             }
             return menu; 
         }
 
-        // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ORDERING MENU METHODS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> ADD MONEY >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string AddMoney(int deposit)
         {
 
             if (deposit < 0)
             {
-                return $"The feature says add money not subratact, this ain't a bank G";
+                return $"Invalid input, please try again.";
             }
             else if ((Balance + deposit) <= 1000 && Balance + deposit >= 0)
-            { // Merritt said I could break this
+            { 
                 Balance += deposit;
                 auditEntries.Add($"{DateTime.Now} ADD MONEY: ${deposit} ${Balance} ");
                 return $"Your new Balance is: ${Math.Round(Balance, 2)}";
             }
             else if (Balance + deposit > 1000)
             {
-                return "I already told you to keep it under $1000, stop wasting my time and try again.";
+                return "Invalid input (balance cannot exceed $1000), please try again.";
             }
             else
             {
-                return "I blame John for this.";
+                return "Invalid input, please try again";
             }
 
         }
 
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> SELECT PRODUCT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         public string SelectProduct(string choice, int amountToPurchase, FileAccess file)
         {
             bool choiceIsInDictionary = items.ContainsKey(choice);
             
-
-            if (choiceIsInDictionary)
+            if (choiceIsInDictionary) //if user selected a valid item
             {
                 int amountAvailable = items[choice].Quantity;
                 double costOfPurchase = items[choice].Price * amountToPurchase;
 
-                if ((amountAvailable - amountToPurchase) >= 0 && (Balance >= costOfPurchase) && amountToPurchase > 0)
+                if ((amountAvailable - amountToPurchase) >= 0 && (Balance >= costOfPurchase) && amountToPurchase > 0)  //if valid purchase
                 {
-                    //if purchase will be successful
                     items[choice].Quantity -= amountToPurchase;
                     Balance -= (costOfPurchase);
 
-                    purchaseReportLines.Add($"{amountToPurchase} {items[choice].GetType().Name} {items[choice].Name} ${items[choice].Price} ${Math.Round(amountToPurchase * items[choice].Price, 2)}");
+                    purchaseReportLines.Add($"{amountToPurchase} {items[choice].Name} at ${items[choice].Price}/item (${Math.Round(amountToPurchase * items[choice].Price, 2)} total)");
 
                     amountSpent += Math.Round(amountToPurchase * items[choice].Price, 2);
 
@@ -113,39 +95,36 @@ namespace Capstone.Classes
                     items[choice].TotalAmountPurchased += amountToPurchase;
                     items[choice].TotalRevenue += Math.Round(amountToPurchase * items[choice].Price, 2);
 
-
                     return $"Your purchase of {choice} was successful, your new balance is ${Math.Round(Balance, 2)}";
                 }
-                else if (amountAvailable <= 0) //Item sold out
+                else if (amountAvailable <= 0) //if item sold out
                 {
                     return $"We are currently out of {choice}, please select different item";
 
                 }
-                else if ((amountAvailable - amountToPurchase) < 0) //insufficient stock amount
+                else if ((amountAvailable - amountToPurchase) < 0) //if insufficient stock amount
                 {
                     return "Insufficient stock for amount requested.";
 
                 }
-                else if (Balance < costOfPurchase)
+                else if (Balance < costOfPurchase) //if insufficient funds
                 {
                     return "Insufficient funds. Please add enough money before attempting this purchase.";
                 }
                 else if (amountToPurchase <= 0)
                 {
-                    return "You're a troll, pick a real amount over zero";
+                    return "Invalid input, please try again";
                 }
             }
-            else
+            else //if user selected an invalid item
             {
-                
                     return $"Sorry your selected choice of {choice} does not exist, please select product listed above.";
-
-                
             }
-            return "Whoa, you really broke the code this time, huh? Nice. :(";
+            return "Invalid input, please try again";
         }
 
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> MAKE CHANGE >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        /* Project required the customer's money to be returned using nickels, dimes, quarters, ones, fives, 
+           tens, and twenties. (using the smallest amount of bills and coins possible) */
         public string ReturnMoney()
         {
             string change;
@@ -209,8 +188,7 @@ namespace Capstone.Classes
             auditEntries.Add($"{DateTime.Now} GIVE CHANGE: ${totalChange} ${Balance} ");
             return change;
         }
-
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> COMPLETE TRANSACTION REPORT >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+       
         public List<string> BuildScreenReport()
         {
             return purchaseReportLines;
@@ -220,6 +198,5 @@ namespace Capstone.Classes
         {
             return amountSpent;
         }
-
     }  
 }

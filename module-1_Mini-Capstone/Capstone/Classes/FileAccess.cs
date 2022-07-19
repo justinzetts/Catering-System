@@ -11,21 +11,15 @@ namespace Capstone.Classes
     /// </summary>
     public class FileAccess
     {
-        // All external data files for this application should live in this directory.
-        // You will likely need to create this directory and copy / paste any needed files.
         private const string sourceFile = @"C:\Catering\cateringsystem.csv";
         private const string destinationLogFile = @"C:\Catering\log.txt";
         private const string destinationTotalSalesFile = @"C:\Catering\totalsales.txt";
         private const string SourceTotalSalesFile = @"C:\Catering\totalsalessource.txt";
         CateringSystem auditList = new CateringSystem();
-        public void ReadFiles(CateringSystem system)
+        public void ReadFiles(CateringSystem system) // reads data from a csv file to populate CateringItem subclasses with objects
         {
-            
-
             using (StreamReader fileInput = new StreamReader(sourceFile))
-
             {
-
                 while (!fileInput.EndOfStream)
                 {
                     string line = fileInput.ReadLine();
@@ -57,10 +51,8 @@ namespace Capstone.Classes
                 }
             }
         }
-        //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Write File  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
-        public void WriteAuditLog(CateringSystem system) //when you're declaring it you're making a new instance of it, which does not have the stored values
-                                                         //the reason this works is because we're using a the same cateringSystem object we declared when the system starts
+     
+        public void WriteAuditLog(CateringSystem system) 
         {
             using (StreamWriter sw = new StreamWriter(destinationLogFile, true))
             {
@@ -71,36 +63,6 @@ namespace Capstone.Classes
                 }
             }
         }
-
-
-        //public void WriteTotalSalesLog(CateringItem item)
-        //{
-        //    List<string> totalSalesList = new List<string>();
-        //    using (StreamReader sr = new StreamReader(SourceTotalSalesFile))
-        //    using (StreamWriter sw = new StreamWriter(destinationTotalSalesFile, false))
-        //    {
-
-        //    double totalSalesVariable = 0;
-        //    for (int i = 0; i < 18; i++)
-        //        {
-        //            string line = sr.ReadLine();
-        //            string[] totalSalesArray = line.Split("|");
-
-        //            string itemName = item.Name;
-        //            int numberSold = int.Parse(totalSalesArray[1]);
-        //            string[] arrayIndex2WithoutDollarSign = totalSalesArray[2].Split("$");
-        //            double revenueSold = double.Parse(arrayIndex2WithoutDollarSign[1]);
-
-        //            numberSold += item.TotalAmountPurchased;
-        //            revenueSold += item.TotalRevenue;
-        //            totalSalesVariable += item.TotalRevenue;
-
-        //            sw.WriteLine(@$"{item.Name}|{numberSold}|${revenueSold}");
-
-        //            // need to copt TotalSales.txt to TotalSalesSource.txt as final step
-        //        }
-        //    }
-        //}
 
         // These files should be read from / written to in the DataDirectory
         private const string CateringFileName = @"cateringsystem.csv";

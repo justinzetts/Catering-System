@@ -9,9 +9,5 @@ namespace Capstone.Classes
         public Account()
         {
         }
-
-        
-
-
     }
 }
